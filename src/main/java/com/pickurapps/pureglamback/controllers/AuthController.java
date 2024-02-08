@@ -78,14 +78,14 @@ public class AuthController {
     }
 
     @PostMapping("/admin/login")
-    public LoginUserResponseDto loginAdminUser(@RequestBody LoginUserRequestDto loginUserRequestDto) throws
+    public ResponseEntity<?> loginAdminUser(@RequestBody LoginUserRequestDto loginUserRequestDto) throws
             BadCredentialsException,
             DisabledException,
             UsernameNotFoundException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserRequestDto.getEmail(), loginUserRequestDto.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Incorrect email or password");
+            return new ResponseEntity<>("Wrong email or password", HttpStatus.UNAUTHORIZED);
         }
 
         final UserDetails userDetails = userService.userDetailsService().loadUserByUsername(loginUserRequestDto.getEmail());
@@ -97,19 +97,22 @@ public class AuthController {
             loginUserResponseDto.setJwt(jwt);
             loginUserResponseDto.setUserId(optionalAdminUser.get().getId());
 
+        } else {
+            return new ResponseEntity<>("Wrong email or password", HttpStatus.UNAUTHORIZED);
         }
-        return loginUserResponseDto;
+
+        return new ResponseEntity<>(loginUserResponseDto, HttpStatus.OK);
     }
 
     @PostMapping("/staff/login")
-    public LoginUserResponseDto loginStaffUser(@RequestBody LoginUserRequestDto loginUserRequestDto) throws
+    public ResponseEntity<?> loginStaffUser(@RequestBody LoginUserRequestDto loginUserRequestDto) throws
             BadCredentialsException,
             DisabledException,
             UsernameNotFoundException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserRequestDto.getEmail(), loginUserRequestDto.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Incorrect email or password");
+            return new ResponseEntity<>("Wrong email or password", HttpStatus.UNAUTHORIZED);
         }
 
         final UserDetails userDetails = userService.userDetailsService().loadUserByUsername(loginUserRequestDto.getEmail());
@@ -121,19 +124,22 @@ public class AuthController {
             loginUserResponseDto.setJwt(jwt);
             loginUserResponseDto.setUserId(optionalStaffUser.get().getId());
 
+        } else {
+            return new ResponseEntity<>("Wrong email or password", HttpStatus.UNAUTHORIZED);
         }
-        return loginUserResponseDto;
+
+        return new ResponseEntity<>(loginUserResponseDto, HttpStatus.OK);
     }
 
     @PostMapping("/customer/login")
-    public LoginUserResponseDto loginCustomerUser(@RequestBody LoginUserRequestDto loginUserRequestDto) throws
+    public ResponseEntity<?> loginCustomerUser(@RequestBody LoginUserRequestDto loginUserRequestDto) throws
             BadCredentialsException,
             DisabledException,
             UsernameNotFoundException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUserRequestDto.getEmail(), loginUserRequestDto.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Incorrect email or password");
+            return new ResponseEntity<>("Wrong email or password", HttpStatus.UNAUTHORIZED);
         }
 
         final UserDetails userDetails = userService.userDetailsService().loadUserByUsername(loginUserRequestDto.getEmail());
@@ -145,7 +151,10 @@ public class AuthController {
             loginUserResponseDto.setJwt(jwt);
             loginUserResponseDto.setUserId(optionalCustomerUser.get().getId());
 
+        } else {
+            return new ResponseEntity<>("Wrong email or password", HttpStatus.UNAUTHORIZED);
         }
-        return loginUserResponseDto;
+
+        return new ResponseEntity<>(loginUserResponseDto, HttpStatus.OK);
     }
 }
