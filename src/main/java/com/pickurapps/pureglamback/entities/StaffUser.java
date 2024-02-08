@@ -1,5 +1,6 @@
 package com.pickurapps.pureglamback.entities;
 
+import com.pickurapps.pureglamback.enums.StaffPermissionsEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,6 +23,10 @@ public class StaffUser implements UserDetails {
     private String lastName;
     private String email;
     private String password;
+
+    @ElementCollection(targetClass = StaffPermissionsEnum.class)
+    @Enumerated(EnumType.STRING)
+    private Set<StaffPermissionsEnum> permissions;
 
     @Column(columnDefinition = "longblob")
     private byte[] avatar;
