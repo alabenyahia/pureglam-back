@@ -45,7 +45,12 @@ public class AuthServiceImpl implements AuthService{
             customerUser.setLastName(registerCustomerRequestDto.getLastName());
             customerUser.setEmail(registerCustomerRequestDto.getEmail());
             customerUser.setPassword(new BCryptPasswordEncoder().encode(registerCustomerRequestDto.getPassword()));
-            customerUser.setAvatar(registerCustomerRequestDto.getAvatar().getBytes());
+
+            if (registerCustomerRequestDto.getAvatar() == null) {
+                customerUser.setAvatar(null);
+            } else {
+                customerUser.setAvatar(registerCustomerRequestDto.getAvatar().getBytes());
+            }
 
             CustomerUser createdCustomerUser = customerUserRepository.save(customerUser);
             CustomerUserDto customerUserDto = new CustomerUserDto();
@@ -65,7 +70,13 @@ public class AuthServiceImpl implements AuthService{
             staffUser.setLastName(registerStaffRequestDto.getLastName());
             staffUser.setEmail(registerStaffRequestDto.getEmail());
             staffUser.setPassword(new BCryptPasswordEncoder().encode(registerStaffRequestDto.getPassword()));
-            staffUser.setAvatar(registerStaffRequestDto.getAvatar().getBytes());
+
+            if (registerStaffRequestDto.getAvatar() == null) {
+                staffUser.setAvatar(null);
+            } else {
+                staffUser.setAvatar(registerStaffRequestDto.getAvatar().getBytes());
+            }
+
             staffUser.setPermissions(registerStaffRequestDto.getPermissions());
 
             StaffUser createdStaffUser = staffUserRepository.save(staffUser);
