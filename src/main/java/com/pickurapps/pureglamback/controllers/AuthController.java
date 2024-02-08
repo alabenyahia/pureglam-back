@@ -19,10 +19,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -41,7 +38,7 @@ public class AuthController {
     private final AdminUserRepository adminUserRepository;
 
     @PostMapping("/customer/register")
-    public ResponseEntity<?> registerCustomerUser(@RequestBody RegisterCustomerRequestDto registerCustomerRequestDto) {
+    public ResponseEntity<?> registerCustomerUser(@ModelAttribute RegisterCustomerRequestDto registerCustomerRequestDto) {
         if (authService.isCustomerAlreadyRegistered(registerCustomerRequestDto.getEmail())) {
             return new ResponseEntity<>("Email already used!", HttpStatus.NOT_ACCEPTABLE);
         }
@@ -61,7 +58,7 @@ public class AuthController {
     }
 
     @PostMapping("/staff/register")
-    public ResponseEntity<?> registerStaffUser(@RequestBody RegisterStaffRequestDto registerStaffRequestDto) {
+    public ResponseEntity<?> registerStaffUser(@ModelAttribute RegisterStaffRequestDto registerStaffRequestDto) {
         if (authService.isStaffAlreadyRegistered(registerStaffRequestDto.getEmail())) {
             return new ResponseEntity<>("Email already used!", HttpStatus.NOT_ACCEPTABLE);
         }
