@@ -14,7 +14,8 @@ public class CustomerStoreServiceDto {
     private String name;
     private String description;
     private Float price;
-    private Float rating;
+    // add rating functionality private Float rating;
+
     private Date addedDate;
 
     private Long store;

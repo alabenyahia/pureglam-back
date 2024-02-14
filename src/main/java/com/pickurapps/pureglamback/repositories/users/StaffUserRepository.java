@@ -1,4 +1,4 @@
-package com.pickurapps.pureglamback.repositories;
+package com.pickurapps.pureglamback.repositories.users;
 
 import com.pickurapps.pureglamback.entities.users.StaffUser;
 import org.springframework.data.jpa.repository.JpaRepository;

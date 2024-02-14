@@ -1,4 +1,4 @@
-package com.pickurapps.pureglamback.repositories;
+package com.pickurapps.pureglamback.repositories.customer;
 
 import com.pickurapps.pureglamback.entities.customer.CustomerStore;
 import org.springframework.data.jpa.repository.JpaRepository;

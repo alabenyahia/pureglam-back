@@ -15,7 +15,4 @@ public class CustomerStorePhoto {
     @Column(columnDefinition = "longblob")
     private byte[] photo;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_store_id")
-    private CustomerStore customerStore;
 }

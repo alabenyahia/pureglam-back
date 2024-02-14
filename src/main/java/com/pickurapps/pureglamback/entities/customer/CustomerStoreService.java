@@ -3,6 +3,7 @@ package com.pickurapps.pureglamback.entities.customer;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
@@ -18,11 +19,11 @@ public class CustomerStoreService {
     private String name;
     private String description;
     private Float price;
-    private Float rating;
+    // add rating functionality private Float rating;
     private Date addedDate;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<CustomerStoreServiceComment> comments;
+    private Set<CustomerStoreServiceComment> comments = Collections.emptySet();
 
     @ManyToOne
     private CustomerStore store;
