@@ -1,14 +1,15 @@
 package com.pickurapps.pureglamback.entities.customer;
 
+import com.pickurapps.pureglamback.dtos.customer.CustomerStoreDto;
+import com.pickurapps.pureglamback.dtos.customer.CustomerStorePhotoDto;
+import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceCommentDto;
+import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
 import com.pickurapps.pureglamback.entities.users.CustomerUser;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -31,6 +32,36 @@ public class CustomerStore {
 
     @OneToMany(mappedBy = "customer_store", cascade = CascadeType.ALL)
     private Set<CustomerStoreService> services = Collections.emptySet();
+
+    public CustomerStoreDto getCustomerStoreDto() {
+        CustomerStoreDto customerStoreDto = new CustomerStoreDto();
+        customerStoreDto.setId(id);
+        customerStoreDto.setName(name);
+
+        int[] brandColor = {this.brandColor.getRed(), this.brandColor.getGreen(), this.brandColor.getBlue()};
+        customerStoreDto.setBrandColor(brandColor);
+
+        customerStoreDto.setCustomerUserId(customerUser.getId());
+
+        if (!services.isEmpty()) {
+            Set<CustomerStoreServiceDto> servicesDtoList = new HashSet<>();
+            for (CustomerStoreService storeService : services) {
+                servicesDtoList.add(storeService.getCustomerStoreServiceDto());
+            }
+            customerStoreDto.setServices(servicesDtoList);
+        }
+
+        if (!photos.isEmpty()) {
+            List<CustomerStorePhotoDto> photosDtoList = new ArrayList<>();
+            for (CustomerStorePhoto storePhoto : photos) {
+                photosDtoList.add(storePhoto.getCustomerStorePhotoDto());
+            }
+            customerStoreDto.setPhotos(photosDtoList);
+        }
+
+        return customerStoreDto;
+
+    }
 
     //TODO: ADD [lat, long] for store's map location
 

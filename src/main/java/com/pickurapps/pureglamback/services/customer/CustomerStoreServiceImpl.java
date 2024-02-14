@@ -113,6 +113,8 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
 
     @Override
     public CustomerStoreDto getStoreById(Long storeId) {
-        return null;
+        Optional<CustomerStore> optionalCustomerStore = customerStoreRepository.findById(storeId);
+
+        return optionalCustomerStore.map(CustomerStore::getCustomerStoreDto).orElse(null);
     }
 }

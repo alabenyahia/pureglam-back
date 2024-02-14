@@ -8,5 +8,4 @@ public class CustomerStorePhotoDto {
     private Long id;
     private MultipartFile photo;
     private byte[] returnedPhoto;
-    private Long storeId;
 }

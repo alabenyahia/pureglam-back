@@ -1,5 +1,6 @@
 package com.pickurapps.pureglamback.entities.customer;
 
+import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceCommentDto;
 import com.pickurapps.pureglamback.entities.users.CustomerUser;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,4 +22,14 @@ public class CustomerStoreServiceComment {
 
     private String comment;
     private Date addedDate;
+
+    CustomerStoreServiceCommentDto getCustomerStoreServiceCommentDto() {
+        CustomerStoreServiceCommentDto customerStoreServiceCommentDto = new CustomerStoreServiceCommentDto();
+        customerStoreServiceCommentDto.setId(id);
+        customerStoreServiceCommentDto.setUserId(customerUser.getId());
+        customerStoreServiceCommentDto.setComment(comment);
+        customerStoreServiceCommentDto.setAddedDate(addedDate);
+
+        return customerStoreServiceCommentDto;
+    }
 }

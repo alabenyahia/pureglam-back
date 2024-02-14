@@ -1,10 +1,14 @@
 package com.pickurapps.pureglamback.entities.customer;
 
+import com.pickurapps.pureglamback.dtos.customer.CustomerStorePhotoDto;
+import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceCommentDto;
+import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,5 +31,25 @@ public class CustomerStoreService {
 
     @ManyToOne
     private CustomerStore store;
+
+    public CustomerStoreServiceDto getCustomerStoreServiceDto() {
+        CustomerStoreServiceDto customerStoreServiceDto = new CustomerStoreServiceDto();
+        customerStoreServiceDto.setId(id);
+        customerStoreServiceDto.setName(name);
+        customerStoreServiceDto.setDescription(description);
+        customerStoreServiceDto.setPrice(price);
+        customerStoreServiceDto.setAddedDate(addedDate);
+
+        if (!comments.isEmpty()) {
+            Set<CustomerStoreServiceCommentDto> commentsListDto = new HashSet<>();
+            for (CustomerStoreServiceComment storeComment : comments) {
+                commentsListDto.add(storeComment.getCustomerStoreServiceCommentDto());
+            }
+            customerStoreServiceDto.setComments(commentsListDto);
+        }
+        customerStoreServiceDto.setStore(store.getId());
+
+        return customerStoreServiceDto;
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.pickurapps.pureglamback.entities.customer;
 
+import com.pickurapps.pureglamback.dtos.customer.CustomerStorePhotoDto;
 import com.pickurapps.pureglamback.entities.customer.CustomerStore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,5 +15,13 @@ public class CustomerStorePhoto {
 
     @Column(columnDefinition = "longblob")
     private byte[] photo;
+
+    public CustomerStorePhotoDto getCustomerStorePhotoDto() {
+        CustomerStorePhotoDto customerStorePhotoDto = new CustomerStorePhotoDto();
+        customerStorePhotoDto.setId(id);
+        customerStorePhotoDto.setReturnedPhoto(photo);
+
+        return customerStorePhotoDto;
+    }
 
 }
