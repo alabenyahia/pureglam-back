@@ -103,6 +103,11 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
 
     @Override
     public boolean deleteStore(Long storeId) {
+        Optional<CustomerStore> optionalCustomerStore = customerStoreRepository.findById(storeId);
+        if (optionalCustomerStore.isPresent()) {
+            customerStoreRepository.deleteById(storeId);
+            return true;
+        }
         return false;
     }
 
