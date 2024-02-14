@@ -8,7 +8,7 @@ import java.util.List;
 public interface CustomerStoreService {
     List<CustomerStoreDto> getAllStoresByCustomerId(Long customerId);
     boolean addStore(CustomerStoreDto customerStoreDto) throws IOException;
-    boolean updateStore(Long storeId, CustomerStoreDto customerStoreDto);
+    boolean updateStore(Long storeId, CustomerStoreDto customerStoreDto) throws IOException;
     boolean deleteStore(Long storeId);
     CustomerStoreDto getStoreById(Long storeId);
 }

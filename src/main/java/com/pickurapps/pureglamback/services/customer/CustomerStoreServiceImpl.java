@@ -68,7 +68,36 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
     }
 
     @Override
-    public boolean updateStore(Long storeId, CustomerStoreDto customerStoreDto) {
+    public boolean updateStore(Long storeId, CustomerStoreDto customerStoreDto) throws IOException {
+        Optional<CustomerStore> optionalCustomerStore = customerStoreRepository.findById(storeId);
+        if (optionalCustomerStore.isPresent()) {
+            CustomerStore existingCustomerStore = optionalCustomerStore.get();
+            existingCustomerStore.setName(customerStoreDto.getName());
+            int[] storeDtoColor = customerStoreDto.getBrandColor();
+            existingCustomerStore.setBrandColor(new Color(storeDtoColor[0], storeDtoColor[1], storeDtoColor[2]));
+
+            if(!customerStoreDto.getPhotos().isEmpty()) {
+                List<CustomerStorePhoto> photos = new ArrayList<>();
+                for (CustomerStorePhotoDto photoDto : customerStoreDto.getPhotos()) {
+                    CustomerStorePhoto photo = new CustomerStorePhoto();
+                    try {
+                        photo.setPhoto(photoDto.getPhoto().getBytes());
+                        photos.add(photo);
+
+                        //TODO: MAYBE I NEED TO ADD IT TO REPO FIRST: CHECK LATER
+
+                    } catch (Exception e) {
+                        System.out.println("error while parsing customer store photo");
+                        throw new IOException();
+                    }
+                }
+                existingCustomerStore.setPhotos(photos);
+            }
+
+            customerStoreRepository.save(existingCustomerStore);
+            return true;
+
+        }
         return false;
     }
 
