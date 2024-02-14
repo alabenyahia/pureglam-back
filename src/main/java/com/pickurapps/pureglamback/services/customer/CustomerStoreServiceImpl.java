@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
 
     @Override
     public List<CustomerStoreDto> getAllStoresByCustomerId(Long customerId) {
-        return null;
+        return customerStoreRepository.findAllByCustomerUserId(customerId).stream().map(CustomerStore::getCustomerStoreDto).collect(Collectors.toList());
     }
 
     @Override
@@ -114,7 +115,6 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
     @Override
     public CustomerStoreDto getStoreById(Long storeId) {
         Optional<CustomerStore> optionalCustomerStore = customerStoreRepository.findById(storeId);
-
         return optionalCustomerStore.map(CustomerStore::getCustomerStoreDto).orElse(null);
     }
 }
