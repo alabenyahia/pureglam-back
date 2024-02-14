@@ -1,4 +1,4 @@
-package com.pickurapps.pureglamback.dtos;
+package com.pickurapps.pureglamback.dtos.auth;
 
 import lombok.Data;
 

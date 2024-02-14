@@ -1,6 +1,6 @@
 package com.pickurapps.pureglamback.repositories;
 
-import com.pickurapps.pureglamback.entities.StaffUser;
+import com.pickurapps.pureglamback.entities.users.StaffUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,14 @@
 package com.pickurapps.pureglamback.controllers;
 
-import com.pickurapps.pureglamback.dtos.*;
-import com.pickurapps.pureglamback.entities.AdminUser;
-import com.pickurapps.pureglamback.entities.CustomerUser;
-import com.pickurapps.pureglamback.entities.StaffUser;
+import com.pickurapps.pureglamback.dtos.auth.LoginUserRequestDto;
+import com.pickurapps.pureglamback.dtos.auth.LoginUserResponseDto;
+import com.pickurapps.pureglamback.dtos.auth.RegisterCustomerRequestDto;
+import com.pickurapps.pureglamback.dtos.auth.RegisterStaffRequestDto;
+import com.pickurapps.pureglamback.dtos.customer.CustomerUserDto;
+import com.pickurapps.pureglamback.dtos.staff.StaffUserDto;
+import com.pickurapps.pureglamback.entities.users.AdminUser;
+import com.pickurapps.pureglamback.entities.users.CustomerUser;
+import com.pickurapps.pureglamback.entities.users.StaffUser;
 import com.pickurapps.pureglamback.repositories.AdminUserRepository;
 import com.pickurapps.pureglamback.repositories.CustomerUserRepository;
 import com.pickurapps.pureglamback.repositories.StaffUserRepository;

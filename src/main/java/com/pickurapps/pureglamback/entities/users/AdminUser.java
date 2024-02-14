@@ -1,4 +1,4 @@
-package com.pickurapps.pureglamback.entities;
+package com.pickurapps.pureglamback.entities.users;
 
 import jakarta.persistence.*;
 import lombok.Data;

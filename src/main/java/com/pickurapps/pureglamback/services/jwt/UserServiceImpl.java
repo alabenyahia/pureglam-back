@@ -1,9 +1,9 @@
 package com.pickurapps.pureglamback.services.jwt;
 
 
-import com.pickurapps.pureglamback.entities.AdminUser;
-import com.pickurapps.pureglamback.entities.CustomerUser;
-import com.pickurapps.pureglamback.entities.StaffUser;
+import com.pickurapps.pureglamback.entities.users.AdminUser;
+import com.pickurapps.pureglamback.entities.users.CustomerUser;
+import com.pickurapps.pureglamback.entities.users.StaffUser;
 import com.pickurapps.pureglamback.repositories.AdminUserRepository;
 import com.pickurapps.pureglamback.repositories.CustomerUserRepository;
 import com.pickurapps.pureglamback.repositories.StaffUserRepository;
