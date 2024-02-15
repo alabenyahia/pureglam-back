@@ -2,7 +2,10 @@ package com.pickurapps.pureglamback.controllers;
 
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreDto;
 import com.pickurapps.pureglamback.entities.customer.CustomerStore;
+import com.pickurapps.pureglamback.entities.users.CustomerUser;
+import com.pickurapps.pureglamback.repositories.users.CustomerUserRepository;
 import com.pickurapps.pureglamback.services.customer.CustomerStoreService;
+import com.pickurapps.pureglamback.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customer/store")
 @RequiredArgsConstructor
 public class CustomerStoreController {
     private final CustomerStoreService customerStoreService;
+    private final CustomerUserRepository customerUserRepository;
+    private final JWTUtil jwtUtil;
 
 
     @PostMapping("/")
@@ -28,10 +34,16 @@ public class CustomerStoreController {
         }
     }
 
-    @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<CustomerStoreDto>> getAllStoreByCustomerId(@PathVariable Long customerId) {
-        List<CustomerStoreDto> customerStoreDtos = customerStoreService.getAllStoresByCustomerId(customerId);
-        return ResponseEntity.ok(customerStoreDtos);
+    @GetMapping("/allcustomerstores")
+    public ResponseEntity<?> getAllStoreByCustomerId(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        String customerEmail = jwtUtil.extractUserName(token);
+        Optional<CustomerUser> customerUser = customerUserRepository.findFirstByEmail(customerEmail);
+        if (customerUser.isPresent()) {
+            List<CustomerStoreDto> customerStoreDtos = customerStoreService.getAllStoresByCustomerId(customerUser.get().getId());
+            return ResponseEntity.ok(customerStoreDtos);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @GetMapping("/{storeId}")
