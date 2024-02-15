@@ -44,7 +44,8 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
             store.setBrandColor(new Color(storeDtoColor[0], storeDtoColor[1], storeDtoColor[2]));
             store.setCustomerUser(optionalCustomer.get());
 
-            if(!customerStoreDto.getPhotos().isEmpty()) {
+            // TODO: CONSIDER IMPLEMENTING ADD STORE PHOTO GALLERY ON ITS OWN
+            if(customerStoreDto.getPhotos() != null && (!customerStoreDto.getPhotos().isEmpty())) {
                 List<CustomerStorePhoto> photos = new ArrayList<>();
                 for (CustomerStorePhotoDto photoDto : customerStoreDto.getPhotos()) {
                     CustomerStorePhoto photo = new CustomerStorePhoto();
@@ -61,6 +62,7 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
                 }
                 store.setPhotos(photos);
             }
+            //CANT ADD A SERVICE AT THE TIME YOU CREATE A NEW STORE
 
             customerStoreRepository.save(store);
             return true;
@@ -77,7 +79,8 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
             int[] storeDtoColor = customerStoreDto.getBrandColor();
             existingCustomerStore.setBrandColor(new Color(storeDtoColor[0], storeDtoColor[1], storeDtoColor[2]));
 
-            if(!customerStoreDto.getPhotos().isEmpty()) {
+            // TODO: CONSIDER IMPLEMENTING UPDATE STORE PHOTO GALLERY ON ITS OWN
+            if(customerStoreDto.getPhotos() != null && (!customerStoreDto.getPhotos().isEmpty())) {
                 List<CustomerStorePhoto> photos = new ArrayList<>();
                 for (CustomerStorePhotoDto photoDto : customerStoreDto.getPhotos()) {
                     CustomerStorePhoto photo = new CustomerStorePhoto();

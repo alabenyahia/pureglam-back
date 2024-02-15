@@ -27,7 +27,7 @@ public class CustomerStoreService {
     private Date addedDate;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<CustomerStoreServiceComment> comments = Collections.emptySet();
+    private Set<CustomerStoreServiceComment> comments;
 
     @ManyToOne
     private CustomerStore store;

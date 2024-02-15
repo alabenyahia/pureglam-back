@@ -19,5 +19,5 @@ public class CustomerStoreServiceDto {
     private Date addedDate;
 
     private Long store;
-    private Set<CustomerStoreServiceCommentDto> comments = Collections.emptySet();
+    private Set<CustomerStoreServiceCommentDto> comments;
 }

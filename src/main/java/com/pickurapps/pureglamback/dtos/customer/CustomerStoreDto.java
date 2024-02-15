@@ -15,6 +15,6 @@ public class CustomerStoreDto {
 
     private Long customerUserId;
 
-    private List<CustomerStorePhotoDto> photos = Collections.emptyList();
-    private Set<CustomerStoreServiceDto> services = Collections.emptySet();
+    private List<CustomerStorePhotoDto> photos;
+    private Set<CustomerStoreServiceDto> services;
 }

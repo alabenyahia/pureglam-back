@@ -24,14 +24,14 @@ public class CustomerStore {
     // add rating functionality private Float rating;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<CustomerStorePhoto> photos = new ArrayList<>();
+    private List<CustomerStorePhoto> photos;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_user_id", nullable = false)
     private CustomerUser customerUser;
 
-    @OneToMany(mappedBy = "customer_store", cascade = CascadeType.ALL)
-    private Set<CustomerStoreService> services = Collections.emptySet();
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    private Set<CustomerStoreService> services;
 
     public CustomerStoreDto getCustomerStoreDto() {
         CustomerStoreDto customerStoreDto = new CustomerStoreDto();
