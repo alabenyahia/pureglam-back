@@ -7,6 +7,8 @@ import com.pickurapps.pureglamback.repositories.users.CustomerUserRepository;
 import com.pickurapps.pureglamback.services.customer.CustomerStoreService;
 import com.pickurapps.pureglamback.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,21 +25,34 @@ public class CustomerStoreController {
     private final CustomerUserRepository customerUserRepository;
     private final JWTUtil jwtUtil;
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomerStoreController.class);
 
-    @PostMapping("/")
-    public ResponseEntity<?> addCustomerStore(@ModelAttribute CustomerStoreDto customerStore) throws IOException {
-        boolean success = customerStoreService.addStore(customerStore);
-        if (success) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addCustomerStore(@ModelAttribute CustomerStoreDto customerStore, @RequestHeader("Authorization") String authorizationHeader) throws IOException {
+        String token = authorizationHeader.replace("Bearer ", "");
+        String customerEmail = jwtUtil.extractUserName(token);
+        Optional<CustomerUser> customerUser = customerUserRepository.findFirstByEmail(customerEmail);
+        if (customerUser.isPresent()) {
+            boolean success = customerStoreService.addStore(customerStore, customerUser.get().getId());
+            if (success) {
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
         }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+
     }
 
-    @GetMapping("/allcustomerstores")
+    @GetMapping("/all/bycustomer")
     public ResponseEntity<?> getAllStoreByCustomerId(@RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
         String customerEmail = jwtUtil.extractUserName(token);
+
+        logger.info("customer email", customerEmail);
         Optional<CustomerUser> customerUser = customerUserRepository.findFirstByEmail(customerEmail);
         if (customerUser.isPresent()) {
             List<CustomerStoreDto> customerStoreDtos = customerStoreService.getAllStoresByCustomerId(customerUser.get().getId());

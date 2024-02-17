@@ -10,7 +10,7 @@ import java.util.Set;
 public class CustomerStoreDto {
     private Long id;
     private String name;
-    private int[] brandColor = {0, 0, 0};
+    private String brandColor;
     // add rating functionality private Float rating;
 
     private Long customerUserId;

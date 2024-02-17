@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,16 +31,15 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
     }
 
     @Override
-    public boolean addStore(CustomerStoreDto customerStoreDto) throws IOException {
-        Optional<CustomerUser> optionalCustomer = customerUserRepository.findById(customerStoreDto.getCustomerUserId());
+    public boolean addStore(CustomerStoreDto customerStoreDto, Long customerId) throws IOException {
+        Optional<CustomerUser> optionalCustomer = customerUserRepository.findById(customerId);
 
         if (optionalCustomer.isPresent()) {
 
             CustomerStore store = new CustomerStore();
 
             store.setName(customerStoreDto.getName());
-            int[] storeDtoColor = customerStoreDto.getBrandColor();
-            store.setBrandColor(new Color(storeDtoColor[0], storeDtoColor[1], storeDtoColor[2]));
+            store.setBrandColor(customerStoreDto.getBrandColor());
             store.setCustomerUser(optionalCustomer.get());
 
             // TODO: CONSIDER IMPLEMENTING ADD STORE PHOTO GALLERY ON ITS OWN
@@ -76,8 +74,7 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
         if (optionalCustomerStore.isPresent()) {
             CustomerStore existingCustomerStore = optionalCustomerStore.get();
             existingCustomerStore.setName(customerStoreDto.getName());
-            int[] storeDtoColor = customerStoreDto.getBrandColor();
-            existingCustomerStore.setBrandColor(new Color(storeDtoColor[0], storeDtoColor[1], storeDtoColor[2]));
+            existingCustomerStore.setBrandColor(customerStoreDto.getBrandColor());
 
             // TODO: CONSIDER IMPLEMENTING UPDATE STORE PHOTO GALLERY ON ITS OWN
             if(customerStoreDto.getPhotos() != null && (!customerStoreDto.getPhotos().isEmpty())) {

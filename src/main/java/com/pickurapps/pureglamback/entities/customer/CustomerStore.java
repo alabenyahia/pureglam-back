@@ -20,7 +20,7 @@ public class CustomerStore {
     private Long id;
 
     private String name;
-    private Color brandColor;
+    private String brandColor;
     // add rating functionality private Float rating;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -38,7 +38,6 @@ public class CustomerStore {
         customerStoreDto.setId(id);
         customerStoreDto.setName(name);
 
-        int[] brandColor = {this.brandColor.getRed(), this.brandColor.getGreen(), this.brandColor.getBlue()};
         customerStoreDto.setBrandColor(brandColor);
 
         customerStoreDto.setCustomerUserId(customerUser.getId());
