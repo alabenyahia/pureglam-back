@@ -26,7 +26,7 @@ public class CustomerStore {
     @OneToMany(cascade = CascadeType.ALL)
     private List<CustomerStorePhoto> photos;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "customer_user_id", nullable = false)
     private CustomerUser customerUser;
 
