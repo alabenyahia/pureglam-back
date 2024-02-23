@@ -28,7 +28,6 @@ public class CustomerStoreController {
     private static final Logger logger = LoggerFactory.getLogger(CustomerStoreController.class);
 
 
-
     @PostMapping("/add")
     public ResponseEntity<?> addCustomerStore(@ModelAttribute CustomerStoreDto customerStore, @RequestHeader("Authorization") String authorizationHeader) throws IOException {
         String token = authorizationHeader.replace("Bearer ", "");
@@ -43,8 +42,6 @@ public class CustomerStoreController {
             }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-
-
     }
 
     @GetMapping("/all/bycustomer")

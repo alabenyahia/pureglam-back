@@ -26,6 +26,13 @@ public class CustomerStoreService {
     // add rating functionality private Float rating;
     private Date addedDate;
 
+    @PrePersist
+    public void setDefaultAddedDate() {
+        if (addedDate == null) {
+            addedDate = new Date();
+        }
+    }
+
     @OneToMany(cascade = CascadeType.ALL)
     private Set<CustomerStoreServiceComment> comments;
 

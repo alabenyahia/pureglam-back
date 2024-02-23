@@ -23,6 +23,13 @@ public class CustomerStoreServiceComment {
     private String comment;
     private Date addedDate;
 
+    @PrePersist
+    public void setDefaultAddedDate() {
+        if (addedDate == null) {
+            addedDate = new Date();
+        }
+    }
+
     CustomerStoreServiceCommentDto getCustomerStoreServiceCommentDto() {
         CustomerStoreServiceCommentDto customerStoreServiceCommentDto = new CustomerStoreServiceCommentDto();
         customerStoreServiceCommentDto.setId(id);

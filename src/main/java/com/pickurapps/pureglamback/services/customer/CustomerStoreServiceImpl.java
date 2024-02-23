@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 public class CustomerStoreServiceImpl implements CustomerStoreService{
 
     private final CustomerStoreRepository customerStoreRepository;
-    private final CustomerStoreServiceRepository customerStoreServiceRepository;
     private final CustomerUserRepository customerUserRepository;
 
     @Override
