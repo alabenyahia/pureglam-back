@@ -40,13 +40,12 @@ public class CustomerStoreServiceServiceImpl implements CustomerStoreServiceServ
     @Override
     public boolean addStoreService(CustomerStoreServiceDto customerStoreServiceDto, Long customerId) throws IOException {
         Optional<CustomerUser> optionalCustomer = customerUserRepository.findById(customerId);
-        Optional<CustomerStore> customerStore = customerStoreRepository.findById(customerStoreServiceDto.getStore());
+        Optional<CustomerStore> customerStore = customerStoreRepository.findById(customerStoreServiceDto.getStoreId());
         if (optionalCustomer.isPresent() && customerStore.isPresent()) {
             CustomerStoreService customerStoreService = new CustomerStoreService();
             customerStoreService.setName(customerStoreServiceDto.getName());
             customerStoreService.setPrice(customerStoreServiceDto.getPrice());
             customerStoreService.setDescription(customerStoreServiceDto.getDescription());
-            customerStoreService.setStore(customerStore.get());
 
             // TODO: CONSIDER IMPLEMENTING ADD STORE PHOTO GALLERY ON ITS OWN
             if(customerStoreServiceDto.getPhotos() != null && (!customerStoreServiceDto.getPhotos().isEmpty())) {
@@ -67,6 +66,7 @@ public class CustomerStoreServiceServiceImpl implements CustomerStoreServiceServ
                 customerStoreService.setPhotos(photos);
             }
 
+            customerStore.get().addService(customerStoreService);
             customerStoreServiceRepository.save(customerStoreService);
             return true;
         }

@@ -6,11 +6,16 @@ import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
 import com.pickurapps.pureglamback.entities.users.CustomerUser;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Table(name = "customer_store")
 public class CustomerStore {
     @Id
@@ -22,14 +27,21 @@ public class CustomerStore {
     // add rating functionality private Float rating;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Photo> photos;
+    private List<Photo> photos = new ArrayList<>();
 
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "customer_user_id", nullable = false)
     private CustomerUser customerUser;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private Set<CustomerStoreService> services;
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<CustomerStoreService> services = Collections.emptySet();
+
+    public void addService(CustomerStoreService service) {
+        services.add(service);
+        if (service.getStore() != this) {
+            service.setStore(this);
+        }
+    }
 
     public CustomerStoreDto getCustomerStoreDto() {
         CustomerStoreDto customerStoreDto = new CustomerStoreDto();

@@ -4,14 +4,16 @@ import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceCommentDto;
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Table(name = "customer_store_service")
 public class CustomerStoreService {
 
@@ -26,7 +28,7 @@ public class CustomerStoreService {
     private Date addedDate;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Photo> photos;
+    private List<Photo> photos = new ArrayList<>();
 
     @PrePersist
     public void setDefaultAddedDate() {
@@ -36,7 +38,7 @@ public class CustomerStoreService {
     }
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Set<CustomerStoreServiceComment> comments;
+    private Set<CustomerStoreServiceComment> comments = Collections.emptySet();
 
     @ManyToOne
     private CustomerStore store;
@@ -56,7 +58,7 @@ public class CustomerStoreService {
             }
             customerStoreServiceDto.setComments(commentsListDto);
         }
-        customerStoreServiceDto.setStore(store.getId());
+        customerStoreServiceDto.setStoreId(store.getId());
 
         return customerStoreServiceDto;
     }
