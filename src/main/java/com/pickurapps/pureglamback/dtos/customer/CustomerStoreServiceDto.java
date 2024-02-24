@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -17,6 +18,8 @@ public class CustomerStoreServiceDto {
     // add rating functionality private Float rating;
 
     private Date addedDate;
+
+    private List<PhotoDto> photos;
 
     private Long store;
     private Set<CustomerStoreServiceCommentDto> comments;

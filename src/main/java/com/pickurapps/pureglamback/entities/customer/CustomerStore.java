@@ -1,14 +1,12 @@
 package com.pickurapps.pureglamback.entities.customer;
 
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreDto;
-import com.pickurapps.pureglamback.dtos.customer.CustomerStorePhotoDto;
-import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceCommentDto;
+import com.pickurapps.pureglamback.dtos.customer.PhotoDto;
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
 import com.pickurapps.pureglamback.entities.users.CustomerUser;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.awt.Color;
 import java.util.*;
 
 @Entity
@@ -24,7 +22,7 @@ public class CustomerStore {
     // add rating functionality private Float rating;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<CustomerStorePhoto> photos;
+    private List<Photo> photos;
 
     @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinColumn(name = "customer_user_id", nullable = false)
@@ -51,8 +49,8 @@ public class CustomerStore {
         }
 
         if (!photos.isEmpty()) {
-            List<CustomerStorePhotoDto> photosDtoList = new ArrayList<>();
-            for (CustomerStorePhoto storePhoto : photos) {
+            List<PhotoDto> photosDtoList = new ArrayList<>();
+            for (Photo storePhoto : photos) {
                 photosDtoList.add(storePhoto.getCustomerStorePhotoDto());
             }
             customerStoreDto.setPhotos(photosDtoList);

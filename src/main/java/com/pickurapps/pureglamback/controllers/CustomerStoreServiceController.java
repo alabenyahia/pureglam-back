@@ -61,14 +61,14 @@ public class CustomerStoreServiceController {
     }
 
     @GetMapping("/{storeServiceId}")
-    public ResponseEntity<CustomerStoreServiceDto> getCustomerStoreById(@PathVariable Long storeServiceId) {
+    public ResponseEntity<CustomerStoreServiceDto> getCustomerStoreServiceById(@PathVariable Long storeServiceId) {
         CustomerStoreServiceDto customerStoreServiceDto = customerStoreServiceService.getStoreServiceById(storeServiceId);
 
         return ResponseEntity.ok(customerStoreServiceDto);
     }
 
     @PutMapping("/{storeServiceId}")
-    public ResponseEntity<Void> updateCustomerStore(@PathVariable Long storeServiceId, @ModelAttribute CustomerStoreServiceDto customerStoreServiceDto) throws IOException {
+    public ResponseEntity<Void> updateCustomerStoreService(@PathVariable Long storeServiceId, @ModelAttribute CustomerStoreServiceDto customerStoreServiceDto) throws IOException {
         try {
             boolean success = customerStoreServiceService.updateStoreService(storeServiceId, customerStoreServiceDto);
 
@@ -80,7 +80,7 @@ public class CustomerStoreServiceController {
     }
 
     @DeleteMapping("/{storeServiceId}")
-    public ResponseEntity<Void> deleteCustomerStore(@PathVariable Long storeServiceId) {
+    public ResponseEntity<Void> deleteCustomerStoreService(@PathVariable Long storeServiceId) {
         boolean deleted = customerStoreServiceService.deleteStoreSerice(storeServiceId);
         if (deleted) {
             return ResponseEntity.ok(null);

@@ -1,14 +1,13 @@
 package com.pickurapps.pureglamback.entities.customer;
 
-import com.pickurapps.pureglamback.dtos.customer.CustomerStorePhotoDto;
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceCommentDto;
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,6 +24,9 @@ public class CustomerStoreService {
     private Float price;
     // add rating functionality private Float rating;
     private Date addedDate;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Photo> photos;
 
     @PrePersist
     public void setDefaultAddedDate() {

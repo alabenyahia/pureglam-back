@@ -2,7 +2,6 @@ package com.pickurapps.pureglamback.dtos.customer;
 
 import lombok.Data;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -15,6 +14,6 @@ public class CustomerStoreDto {
 
     private Long customerUserId;
 
-    private List<CustomerStorePhotoDto> photos;
+    private List<PhotoDto> photos;
     private Set<CustomerStoreServiceDto> services;
 }

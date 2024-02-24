@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class CustomerStorePhotoDto {
+public class PhotoDto {
     private Long id;
     private MultipartFile photo;
     private byte[] returnedPhoto;

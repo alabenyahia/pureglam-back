@@ -1,18 +1,15 @@
 package com.pickurapps.pureglamback.services.customer;
 
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreDto;
-import com.pickurapps.pureglamback.dtos.customer.CustomerStorePhotoDto;
-import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
+import com.pickurapps.pureglamback.dtos.customer.PhotoDto;
 import com.pickurapps.pureglamback.entities.customer.CustomerStore;
-import com.pickurapps.pureglamback.entities.customer.CustomerStorePhoto;
+import com.pickurapps.pureglamback.entities.customer.Photo;
 import com.pickurapps.pureglamback.entities.users.CustomerUser;
 import com.pickurapps.pureglamback.repositories.customer.CustomerStoreRepository;
-import com.pickurapps.pureglamback.repositories.customer.CustomerStoreServiceRepository;
 import com.pickurapps.pureglamback.repositories.users.CustomerUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,9 +40,9 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
 
             // TODO: CONSIDER IMPLEMENTING ADD STORE PHOTO GALLERY ON ITS OWN
             if(customerStoreDto.getPhotos() != null && (!customerStoreDto.getPhotos().isEmpty())) {
-                List<CustomerStorePhoto> photos = new ArrayList<>();
-                for (CustomerStorePhotoDto photoDto : customerStoreDto.getPhotos()) {
-                    CustomerStorePhoto photo = new CustomerStorePhoto();
+                List<Photo> photos = new ArrayList<>();
+                for (PhotoDto photoDto : customerStoreDto.getPhotos()) {
+                    Photo photo = new Photo();
                     try {
                         photo.setPhoto(photoDto.getPhoto().getBytes());
                         photos.add(photo);
@@ -77,9 +74,9 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
 
             // TODO: CONSIDER IMPLEMENTING UPDATE STORE PHOTO GALLERY ON ITS OWN
             if(customerStoreDto.getPhotos() != null && (!customerStoreDto.getPhotos().isEmpty())) {
-                List<CustomerStorePhoto> photos = new ArrayList<>();
-                for (CustomerStorePhotoDto photoDto : customerStoreDto.getPhotos()) {
-                    CustomerStorePhoto photo = new CustomerStorePhoto();
+                List<Photo> photos = new ArrayList<>();
+                for (PhotoDto photoDto : customerStoreDto.getPhotos()) {
+                    Photo photo = new Photo();
                     try {
                         photo.setPhoto(photoDto.getPhoto().getBytes());
                         photos.add(photo);
