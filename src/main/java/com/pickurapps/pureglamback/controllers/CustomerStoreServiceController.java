@@ -7,8 +7,11 @@ import com.pickurapps.pureglamback.entities.users.CustomerUser;
 import com.pickurapps.pureglamback.repositories.customer.CustomerStoreRepository;
 import com.pickurapps.pureglamback.repositories.users.CustomerUserRepository;
 import com.pickurapps.pureglamback.services.customer.CustomerStoreServiceService;
+import com.pickurapps.pureglamback.services.customer.CustomerStoreServiceServiceImpl;
 import com.pickurapps.pureglamback.utils.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,9 @@ public class CustomerStoreServiceController {
     private final CustomerStoreRepository customerStoreRepository;
     private final CustomerUserRepository customerUserRepository;
     private final JWTUtil jwtUtil;
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomerStoreServiceController.class);
+
 
     @PostMapping("/add")
     public ResponseEntity<?> addCustomerStoreService(@ModelAttribute CustomerStoreServiceDto customerStoreServiceDto, @RequestHeader("Authorization") String authorizationHeader) throws IOException {
@@ -75,6 +81,7 @@ public class CustomerStoreServiceController {
             if (success) return ResponseEntity.status(HttpStatus.OK).build();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
+            logger.info("catch error", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

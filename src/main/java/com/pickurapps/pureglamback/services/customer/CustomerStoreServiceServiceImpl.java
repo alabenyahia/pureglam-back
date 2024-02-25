@@ -82,12 +82,14 @@ public class CustomerStoreServiceServiceImpl implements CustomerStoreServiceServ
     @Override
     public boolean updateStoreService(Long storeServiceId, CustomerStoreServiceDto customerStoreServiceDto) throws IOException {
         Optional<CustomerStoreService> customerStoreService = customerStoreServiceRepository.findById(storeServiceId);
+        logger.info("im out");
         if (customerStoreService.isPresent()) {
+            logger.info("i'm in");
             CustomerStoreService existingService = customerStoreService.get();
             existingService.setName(customerStoreServiceDto.getName());
             existingService.setDescription(customerStoreServiceDto.getDescription());
             existingService.setPrice(customerStoreServiceDto.getPrice());
-            if (!customerStoreServiceDto.getComments().isEmpty()) {
+            if (customerStoreServiceDto.getComments() != null && !customerStoreServiceDto.getComments().isEmpty()) {
                 Set<CustomerStoreServiceComment> commentsList = new HashSet<>();
                 for (CustomerStoreServiceCommentDto commentDto : customerStoreServiceDto.getComments()) {
                     CustomerStoreServiceComment comment = new CustomerStoreServiceComment();
