@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/customer/store/service")
+@RequestMapping("/api/customer/service")
 public class CustomerStoreServiceController {
     private final CustomerStoreServiceService customerStoreServiceService;
     private final CustomerStoreRepository customerStoreRepository;

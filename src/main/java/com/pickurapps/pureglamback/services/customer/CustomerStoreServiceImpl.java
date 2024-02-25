@@ -40,12 +40,11 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
 
             // TODO: CONSIDER IMPLEMENTING ADD STORE PHOTO GALLERY ON ITS OWN
             if(customerStoreDto.getPhotos() != null && (!customerStoreDto.getPhotos().isEmpty())) {
-                List<Photo> photos = new ArrayList<>();
                 for (PhotoDto photoDto : customerStoreDto.getPhotos()) {
                     Photo photo = new Photo();
                     try {
                         photo.setPhoto(photoDto.getPhoto().getBytes());
-                        photos.add(photo);
+                        store.addPhoto(photo);
 
                         //TODO: MAYBE I NEED TO ADD IT TO REPO FIRST: CHECK LATER
 
@@ -54,7 +53,6 @@ public class CustomerStoreServiceImpl implements CustomerStoreService{
                         throw new IOException();
                     }
                 }
-                store.setPhotos(photos);
             }
             //CANT ADD A SERVICE AT THE TIME YOU CREATE A NEW STORE
 

@@ -2,8 +2,8 @@ package com.pickurapps.pureglamback.entities.customer;
 
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceCommentDto;
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
+import com.pickurapps.pureglamback.dtos.customer.PhotoDto;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -30,6 +30,10 @@ public class CustomerStoreService {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Photo> photos = new ArrayList<>();
 
+    public void addPhoto(Photo photo) {
+        photos.add(photo);
+    }
+
     @PrePersist
     public void setDefaultAddedDate() {
         if (addedDate == null) {
@@ -39,6 +43,12 @@ public class CustomerStoreService {
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<CustomerStoreServiceComment> comments = Collections.emptySet();
+
+    public void addComment(CustomerStoreServiceComment comment) {
+        comments.add(comment);
+    }
+
+
 
     @ManyToOne
     private CustomerStore store;
@@ -50,6 +60,14 @@ public class CustomerStoreService {
         customerStoreServiceDto.setDescription(description);
         customerStoreServiceDto.setPrice(price);
         customerStoreServiceDto.setAddedDate(addedDate);
+
+        if (!photos.isEmpty()) {
+            List<PhotoDto> photosDtoList = new ArrayList<>();
+            for (Photo storeServicePhoto : photos) {
+                photosDtoList.add(storeServicePhoto.getPhotoDto());
+            }
+            customerStoreServiceDto.setPhotos(photosDtoList);
+        }
 
         if (!comments.isEmpty()) {
             Set<CustomerStoreServiceCommentDto> commentsListDto = new HashSet<>();

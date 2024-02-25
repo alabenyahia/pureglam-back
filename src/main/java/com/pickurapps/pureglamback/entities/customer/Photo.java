@@ -15,7 +15,7 @@ public class Photo {
     @Column(columnDefinition = "longblob")
     private byte[] photo;
 
-    public PhotoDto getCustomerStorePhotoDto() {
+    public PhotoDto getPhotoDto() {
         PhotoDto photoDto = new PhotoDto();
         photoDto.setId(id);
         photoDto.setReturnedPhoto(photo);

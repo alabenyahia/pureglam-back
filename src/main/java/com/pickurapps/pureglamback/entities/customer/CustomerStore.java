@@ -5,7 +5,6 @@ import com.pickurapps.pureglamback.dtos.customer.PhotoDto;
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
 import com.pickurapps.pureglamback.entities.users.CustomerUser;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -43,6 +42,10 @@ public class CustomerStore {
         }
     }
 
+    public void addPhoto(Photo photo) {
+        photos.add(photo);
+    }
+
     public CustomerStoreDto getCustomerStoreDto() {
         CustomerStoreDto customerStoreDto = new CustomerStoreDto();
         customerStoreDto.setId(id);
@@ -63,7 +66,7 @@ public class CustomerStore {
         if (!photos.isEmpty()) {
             List<PhotoDto> photosDtoList = new ArrayList<>();
             for (Photo storePhoto : photos) {
-                photosDtoList.add(storePhoto.getCustomerStorePhotoDto());
+                photosDtoList.add(storePhoto.getPhotoDto());
             }
             customerStoreDto.setPhotos(photosDtoList);
         }

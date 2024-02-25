@@ -1,5 +1,6 @@
 package com.pickurapps.pureglamback.services.customer;
 
+import com.pickurapps.pureglamback.controllers.CustomerStoreController;
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceCommentDto;
 import com.pickurapps.pureglamback.dtos.customer.CustomerStoreServiceDto;
 import com.pickurapps.pureglamback.dtos.customer.PhotoDto;
@@ -12,6 +13,8 @@ import com.pickurapps.pureglamback.repositories.customer.CustomerStoreRepository
 import com.pickurapps.pureglamback.repositories.customer.CustomerStoreServiceRepository;
 import com.pickurapps.pureglamback.repositories.users.CustomerUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -25,6 +28,9 @@ public class CustomerStoreServiceServiceImpl implements CustomerStoreServiceServ
     private final CustomerStoreRepository customerStoreRepository;
     private final CustomerStoreServiceRepository customerStoreServiceRepository;
     private final CustomerUserRepository customerUserRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomerStoreServiceServiceImpl.class);
+
     @Override
     public List<CustomerStoreServiceDto> getAllStoreServices(Long storeId) {
         return customerStoreServiceRepository.findAllByStoreId(storeId).stream().map(CustomerStoreService::getCustomerStoreServiceDto).collect(Collectors.toList());
@@ -49,21 +55,19 @@ public class CustomerStoreServiceServiceImpl implements CustomerStoreServiceServ
 
             // TODO: CONSIDER IMPLEMENTING ADD STORE PHOTO GALLERY ON ITS OWN
             if(customerStoreServiceDto.getPhotos() != null && (!customerStoreServiceDto.getPhotos().isEmpty())) {
-                List<Photo> photos = new ArrayList<>();
                 for (PhotoDto photoDto : customerStoreServiceDto.getPhotos()) {
                     Photo photo = new Photo();
                     try {
                         photo.setPhoto(photoDto.getPhoto().getBytes());
-                        photos.add(photo);
-
+                        customerStoreService.addPhoto(photo);
                         //TODO: MAYBE I NEED TO ADD IT TO REPO FIRST: CHECK LATER
 
                     } catch (Exception e) {
-                        System.out.println("error while parsing customer store photo");
+                        System.out.println("error while parsing customer store service photo");
                         throw new IOException();
                     }
                 }
-                customerStoreService.setPhotos(photos);
+
             }
 
             customerStore.get().addService(customerStoreService);
